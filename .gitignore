@@ -58,6 +58,10 @@ data/
 Rapport_*.pdf
 *.pdf
 
+# Pytest
+.pytest_cache/
+reports/
+
 # Results/outputs (optional - uncomment if you want to track these)
 # results/
 # plots/
