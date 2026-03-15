@@ -137,6 +137,10 @@ strict_optional = true
 # Be lenient with missing imports for third-party packages
 ignore_missing_imports = true
 
+# Pytest: run only tests in tests/ (exclude src/test_*.py scripts that need dataset)
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
 # Bandit configuration - security linting
 [tool.bandit]
 exclude_dirs = ["tests", "venv", ".venv"]
