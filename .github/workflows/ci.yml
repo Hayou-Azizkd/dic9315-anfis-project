@@ -18,7 +18,6 @@ permissions:
   packages: write
 
 jobs:
-
   lint-and-security:
     name: Code Quality & Security
     runs-on: ubuntu-latest
@@ -57,7 +56,6 @@ jobs:
         # Allow vulnerability warnings for learning - can be strict later
         continue-on-error: true
 
-
   run-tests:
     name: Run Tests
     runs-on: ubuntu-latest
@@ -88,7 +86,6 @@ jobs:
             reports/junit.xml
             reports/pytest_report.html
             reports/coverage_html/
-
 
   mutation-tests:
     name: Mutation Testing (Optional)
@@ -123,7 +120,6 @@ jobs:
           name: mutmut-cache
           path: .mutmut-cache/
 
-
   sonarqube:
     name: SonarQube
     runs-on: ubuntu-latest
@@ -137,7 +133,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: test-and-coverage-reports
-          path: .   # extract into workspace root, preserving reports/ sub-path
+          path: . # extract into workspace root, preserving reports/ sub-path
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@v6
         env:
@@ -147,7 +143,6 @@ jobs:
         timeout-minutes: 5
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-
 
   build-docs:
     name: Build and Deploy Documentation
@@ -181,7 +176,6 @@ jobs:
           publish_dir: ./docs/build/html
           force_orphan: true
 
-
   publish-package:
     name: Publish Python Package
     runs-on: ubuntu-latest
@@ -205,7 +199,6 @@ jobs:
         with:
           name: python-package
           path: dist/
-
 
   publish-container:
     name: Publish Container Image
