@@ -47,7 +47,7 @@ Thumbs.db
 *.csv
 *.xls
 *.xlsx
-data/
+# data/
 results/
 
 # Model files

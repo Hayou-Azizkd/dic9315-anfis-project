@@ -114,6 +114,46 @@ mutmut run --paths-to-mutate src --tests-dir tests
 mutmut results
 ```
 
+### Running with Docker
+
+#### Build the Docker image
+
+```bash
+docker build -t anfis-project:latest .
+```
+
+#### Run the container with Jupyter Lab
+
+```bash
+# Basic run (Jupyter Lab on port 8888)
+docker run -p 8888:8888 anfis-project:latest
+
+# Run with volume mounting to access local data
+docker run -p 8888:8888 -v $(pwd)/data:/app/data anfis-project:latest
+
+# Run in detached mode with custom name
+docker run -d -p 8888:8888 --name anfis-lab anfis-project:latest
+```
+
+#### Access Jupyter Lab
+
+Once the container is running, Jupyter Lab will be available at:
+
+```
+http://localhost:8888
+```
+
+The container will output a token-based URL in the logs. Use it to access the lab environment.
+
+#### Stop the container
+
+```bash
+# If running in detached mode
+docker stop anfis-lab
+
+# Or press Ctrl+C if running in foreground mode
+```
+
 ## Pipeline Overview
 
 ### 1. Data Preprocessing (`src/data_preprocessing.py`)
