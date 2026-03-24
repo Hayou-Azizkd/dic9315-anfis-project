@@ -32,6 +32,7 @@ venv/
 ENV/
 env/
 .venv
+.venv-wsl/
 DIC9315/
 
 # Jupyter Notebook (checkpoints only; track .ipynb source)
@@ -47,12 +48,14 @@ DIC9315/
 # OS
 .DS_Store
 Thumbs.db
+.~lock.*
+**/.~lock.*
 
 # Data files (large)
 *.csv
 *.xls
 *.xlsx
-data/
+# data/
 results/
 
 # Model files
@@ -72,11 +75,7 @@ docs/build/
 results/
 plots/
 reports/
+.mutmut-cache/
 
-# Local / secrets
-.env
-.env.*
-!.env.example
-*.log
-
-# uv (lock file uv.lock is committed for reproducible installs)
+# Results/outputs (optional - uncomment if you want to track these)
+# models/

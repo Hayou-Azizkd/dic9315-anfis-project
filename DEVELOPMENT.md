@@ -69,6 +69,46 @@ bandit -r src -c pyproject.toml  # Security check
 pip-audit -r requirements.txt    # Vulnerability check
 ```
 
+## Test Suite and Reports
+
+Run the full automated suite (unit + integration + e2e) with coverage and reports:
+
+```bash
+pytest
+```
+
+Current enforced coverage gate: `--cov-fail-under=52`.
+
+Generated report artifacts:
+
+- `reports/junit.xml` (JUnit XML)
+- `reports/pytest_report.html` (HTML test report)
+- `reports/coverage.xml` (coverage XML)
+- `reports/coverage_html/index.html` (coverage HTML)
+
+Run only end-to-end smoke tests:
+
+```bash
+pytest tests/e2e -k smoke
+```
+
+## Mutation Testing (Bonus)
+
+Install dev dependencies first, then run mutation tests:
+
+```bash
+mutmut run --paths-to-mutate src --tests-dir tests
+mutmut results
+```
+
+In CI, mutation testing runs on pull requests as an optional job.
+
+Inspect one mutant in detail:
+
+```bash
+mutmut show <mutant_id>
+```
+
 ## Sphinx documentation (API)
 
 API documentation is generated with [Sphinx](https://www.sphinx-doc.org/) and `sphinx.ext.autodoc` from docstrings in `src/`.
