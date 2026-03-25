@@ -26,6 +26,7 @@ This project implements a complete machine learning pipeline for credit risk pre
 ├── plots/                     # Generated visualizations
 ├── results/                   # Results and metrics
 ├── reports/                   # Analysis reports
+├── docs/                      # Sphinx source (API reference)
 ├── methodology_section.md     # Detailed methodology documentation
 ├── requirements.txt          # Python dependencies
 └── README.md                  # This file
@@ -74,6 +75,15 @@ bandit -r src/ -c pyproject.toml
 # Run all checks (lint, format, mypy, bandit)
 pre-commit run --all-files
 ```
+
+### Documentation (Sphinx)
+
+```bash
+uv sync --extra dev
+uv run make -C docs html
+```
+
+Then open `docs/build/html/index.html`. Pushes to `main` or `develop` deploy the built site to GitHub Pages. See [DEVELOPMENT.md](DEVELOPMENT.md) for details.
 
 ### Install with pip (alternative)
 
@@ -126,6 +136,211 @@ pytest tests/e2e -k smoke
 mutmut run --paths-to-mutate src --tests-dir tests
 mutmut results
 ```
+
+### Running with Docker
+
+#### Docker Images
+
+This project provides optimized Docker images:
+
+**Lightweight CPU-only Image** (`Dockerfile.ci`) — **Recommended**
+
+- Size: ~1.85GB (optimized, no CUDA dependencies)
+- Includes: Jupyter Lab, pytest, all analysis tools
+- Default: Runs Jupyter Lab
+- Use for: Development, testing, CI/CD, documentation
+- Published to: `ghcr.io/your-repo/projet-equipe3:main` (GitHub Container Registry)
+
+#### Run from GitHub Container Registry (Recommended)
+
+**Quick Start — Run Jupyter Lab**
+
+```bash
+# Pull and run in one command (auto-pulls if not present)
+docker run -p 8888:8888 ghcr.io/hayou-azizkd/mgl7760_projet_equipe3:main
+
+# Or use specific commit SHA for reproducibility
+docker run -p 8888:8888 ghcr.io/hayou-azizkd/mgl7760_projet_equipe3:b0c0325
+```
+
+**Detailed Usage**
+
+```bash
+# Pull the specific image (by commit SHA)
+docker pull ghcr.io/hayou-azizkd/mgl7760_projet_equipe3:b0c0325
+
+# Or pull the latest from main branch
+docker pull ghcr.io/hayou-azizkd/mgl7760_projet_equipe3:main
+
+# Or pull from develop branch
+docker pull ghcr.io/hayou-azizkd/mgl7760_projet_equipe3:develop
+
+# Run Jupyter Lab (default)
+docker run -p 8888:8888 ghcr.io/hayou-azizkd/mgl7760_projet_equipe3:main
+# Access at: http://localhost:8888 (token in logs)
+
+# Run tests (override default command)
+docker run ghcr.io/hayou-azizkd/mgl7760_projet_equipe3:main pytest -v --cov=src
+
+# Run with volume mounting for local data
+docker run -p 8888:8888 \
+  -v $(pwd)/data:/app/data \
+  ghcr.io/hayou-azizkd/mgl7760_projet_equipe3:main
+
+# Run in detached mode (background)
+docker run -d -p 8888:8888 \
+  --name anfis-lab \
+  ghcr.io/hayou-azizkd/mgl7760_projet_equipe3:main
+
+# View logs and get Jupyter token
+docker logs anfis-lab
+
+# Stop the container
+docker stop anfis-lab
+```
+
+**Available Tags**
+
+| Tag                 | Branch           | Use Case                       |
+| ------------------- | ---------------- | ------------------------------ |
+| `main`              | main             | Latest stable release          |
+| `develop`           | develop          | Latest development version     |
+| `b0c0325` (SHA)     | Any              | Specific commit (reproducible) |
+| `v1.0.0` (released) | Release branches | Semantic version releases      |
+
+**Example: Run with everything**
+
+```bash
+docker run -d -p 8888:8888 \
+  --name anfis-lab \
+  -v $(pwd)/data:/app/data \
+  -v $(pwd)/notebooks:/app/notebooks \
+  ghcr.io/hayou-azizkd/mgl7760_projet_equipe3:main
+
+# Get the Jupyter token
+docker logs anfis-lab | grep token
+
+# Access Jupyter at: http://localhost:8888
+```
+
+#### Build Locally
+
+```bash
+# Build lightweight CPU image
+docker build -f Dockerfile.ci -t anfis:latest .
+
+# Run Jupyter Lab (default)
+docker run -p 8888:8888 anfis:latest
+
+# Run tests
+docker run anfis:latest pytest -v --cov=src
+
+# Run tests with coverage reports mounted
+docker run -v $(pwd)/reports:/app/reports anfis:latest pytest -v --cov=src
+```
+
+#### Access Jupyter Lab
+
+Once the container is running, Jupyter Lab will be available at:
+
+```
+http://localhost:8888
+```
+
+The container will output a token-based URL in the logs. Use it to access the lab environment.
+
+#### Stop the container
+
+```bash
+# Press Ctrl+C if running in foreground mode
+
+# Or if running in detached mode
+docker stop <container-id>
+```
+
+#### Run in Detached Mode
+
+```bash
+# Run Jupyter Lab in background
+docker run -d -p 8888:8888 --name anfis-lab anfis:latest
+
+# View logs and get the Jupyter token
+docker logs anfis-lab
+
+# Stop the container
+docker stop anfis-lab
+```
+
+### Docker Optimization Strategy
+
+**Size Comparison:**
+
+- Full GPU image (original): 8.59GB (includes CUDA libraries)
+- Lightweight CPU image: ~1.85GB (CPU-only, optimized)
+- **Savings: 78% reduction** ✅
+
+**Image Registry:**
+
+- Published to: `ghcr.io/hayou-azizkd/mgl7760_projet_equipe3`
+- Automatically pushed on every commit to main/develop/release/hotfix branches
+- No authentication required (public image)
+
+**What we optimized:**
+
+1. **Multi-stage Docker build**: Removes build dependencies from final image
+2. **CPU-only PyTorch**: Uses `torch` CPU wheels instead of CUDA
+3. **Stripped unnecessary packages**: Just essentials for analysis and testing
+4. **Smart .dockerignore**: Excludes tests, docs, git history from image
+
+**Benefits:**
+
+- ✅ Faster builds (60-70% quicker)
+- ✅ Faster pulls from registry
+- ✅ Lower storage costs (78% less)
+- ✅ Suitable for CI/CD pipelines
+- ✅ Still includes Jupyter Lab + full analysis stack
+
+**CI/CD Integration:**
+
+- Automatic builds on push to `main`, `develop`, `release/*`, `hotfix/*` branches
+- Automatic push to GitHub Container Registry (GHCR)
+- Tagged with branch name, commit SHA, and semantic versions
+- GitHub Actions layer caching for fast rebuilds
+
+## CI/CD Pipeline
+
+The project includes a comprehensive GitHub Actions workflow (`.github/workflows/ci.yml`):
+
+**Stages:**
+
+1. **Code Quality & Security** (runs natively)
+   - Ruff linting and formatting
+   - MyPy type checking
+   - Bandit security scanning
+   - Vulnerability audits
+
+2. **Testing** (Docker-based, CPU-optimized)
+   - Pytest with coverage reports
+   - HTML and XML reports
+   - Artifact uploads
+
+3. **Mutation Testing** (Optional, on PRs)
+   - Targeted mutation analysis
+   - Code quality assessment
+
+4. **SonarQube Analysis** (Optional, on PRs)
+   - Code quality metrics
+   - Security hotspots
+   - Technical debt tracking
+
+5. **Documentation** (on main/develop)
+   - Sphinx builds
+   - Auto-deploy to GitHub Pages
+
+6. **Container Publishing**
+   - Lightweight CPU image published to GHCR
+   - Auto-tagged per branch/version
+   - Layer caching enabled for speed
 
 ## Pipeline Overview
 

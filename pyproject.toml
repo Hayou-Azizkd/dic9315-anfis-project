@@ -1,3 +1,7 @@
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "mgl7760-projet-equipe3"
 version = "0.1.0"
@@ -19,7 +23,10 @@ dependencies = [
     "iniconfig==2.3.0",
     "jinja2==3.1.6",
     "joblib==1.5.3",
+    "jupyter==1.1.1",
+    "jupyterlab==4.4.9",
     "kiwisolver==1.5.0",
+    "notebook==7.4.7",
     "llvmlite==0.46.0 ; platform_machine != 'x86_64' or sys_platform != 'darwin'",
     "llvmlite>=0.45.0,<0.46 ; platform_machine == 'x86_64' and sys_platform == 'darwin'",
     "markupsafe==3.0.3",
@@ -83,7 +90,13 @@ dev = [
     "bandit[toml]>=1.7.0", # Security linter for Python
     "pip-audit>=2.0.0",   # Check for known vulnerabilities in dependencies
     "mutmut>=2.5.1",      # Mutation testing
+    "sphinx>=8.0.0",      # API documentation (Sphinx + autodoc)
+    "sphinx-rtd-theme>=3.0.0",
 ]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["src"]
 
 # Ruff configuration - modern Python linter and formatter (replaces black + flake8)
 [tool.ruff]
