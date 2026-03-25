@@ -57,30 +57,24 @@ jobs:
         continue-on-error: true
 
   run-tests:
-    name: Run Tests (Docker - CPU Optimized)
+    name: Run Tests (uv)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Build optimized CI image (CPU-only, ~1.85GB)
-        uses: docker/build-push-action@v5
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v5
         with:
-          context: .
-          file: ./Dockerfile.ci
-          load: true
-          tags: anfis-ci:test
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          python-version: "3.12"
+          enable-cache: true
+          cache-dependency-glob: "uv.lock"
 
-      - name: Run tests in Docker container
-        run: |
-          docker run --rm \
-            -v ${{ github.workspace }}:/app \
-            anfis-ci:test \
-            pytest
+      - name: Install dependencies
+        run: uv sync
+
+      - name: Run tests with pytest
+        run: uv run pytest
+        continue-on-error: false
 
       - name: Upload coverage report
         uses: actions/upload-artifact@v4
