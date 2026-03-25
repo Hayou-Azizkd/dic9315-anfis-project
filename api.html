@@ -1,0 +1,1142 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>API reference &mdash; mgl7760-projet-equipe3 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=01f34227"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="mgl7760-projet-equipe3 documentation" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            mgl7760-projet-equipe3
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">API reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#package">Package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-src.config">Modules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#src.data_preprocessing.DataPreprocessor"><code class="docutils literal notranslate"><span class="pre">DataPreprocessor</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#src.data_preprocessing.DataPreprocessor.apply_smote"><code class="docutils literal notranslate"><span class="pre">DataPreprocessor.apply_smote()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.data_preprocessing.DataPreprocessor.check_missing_values"><code class="docutils literal notranslate"><span class="pre">DataPreprocessor.check_missing_values()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.data_preprocessing.DataPreprocessor.detect_outliers"><code class="docutils literal notranslate"><span class="pre">DataPreprocessor.detect_outliers()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.data_preprocessing.DataPreprocessor.encode_categorical"><code class="docutils literal notranslate"><span class="pre">DataPreprocessor.encode_categorical()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.data_preprocessing.DataPreprocessor.full_pipeline"><code class="docutils literal notranslate"><span class="pre">DataPreprocessor.full_pipeline()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.data_preprocessing.DataPreprocessor.identify_column_types"><code class="docutils literal notranslate"><span class="pre">DataPreprocessor.identify_column_types()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.data_preprocessing.DataPreprocessor.load_data"><code class="docutils literal notranslate"><span class="pre">DataPreprocessor.load_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.data_preprocessing.DataPreprocessor.normalize_features"><code class="docutils literal notranslate"><span class="pre">DataPreprocessor.normalize_features()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.data_preprocessing.DataPreprocessor.remove_missing_critical"><code class="docutils literal notranslate"><span class="pre">DataPreprocessor.remove_missing_critical()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.data_preprocessing.DataPreprocessor.split_data"><code class="docutils literal notranslate"><span class="pre">DataPreprocessor.split_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.data_preprocessing.DataPreprocessor.winsorize_outliers"><code class="docutils literal notranslate"><span class="pre">DataPreprocessor.winsorize_outliers()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#src.feature_selection.FeatureSelector"><code class="docutils literal notranslate"><span class="pre">FeatureSelector</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#src.feature_selection.FeatureSelector.correlation_analysis"><code class="docutils literal notranslate"><span class="pre">FeatureSelector.correlation_analysis()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.feature_selection.FeatureSelector.ensemble_selection"><code class="docutils literal notranslate"><span class="pre">FeatureSelector.ensemble_selection()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.feature_selection.FeatureSelector.mutual_info_selection"><code class="docutils literal notranslate"><span class="pre">FeatureSelector.mutual_info_selection()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.feature_selection.FeatureSelector.rfe_selection"><code class="docutils literal notranslate"><span class="pre">FeatureSelector.rfe_selection()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.feature_selection.FeatureSelector.transform"><code class="docutils literal notranslate"><span class="pre">FeatureSelector.transform()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.feature_selection.FeatureSelector.univariate_selection"><code class="docutils literal notranslate"><span class="pre">FeatureSelector.univariate_selection()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#src.models.ANFISClassifier"><code class="docutils literal notranslate"><span class="pre">ANFISClassifier</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#src.models.ANFISClassifier.fit"><code class="docutils literal notranslate"><span class="pre">ANFISClassifier.fit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.models.ANFISClassifier.predict"><code class="docutils literal notranslate"><span class="pre">ANFISClassifier.predict()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.models.ANFISClassifier.predict_proba"><code class="docutils literal notranslate"><span class="pre">ANFISClassifier.predict_proba()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.models.ANFISClassifier.set_score_request"><code class="docutils literal notranslate"><span class="pre">ANFISClassifier.set_score_request()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#src.models.ModelTrainer"><code class="docutils literal notranslate"><span class="pre">ModelTrainer</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#src.models.ModelTrainer.get_all_models"><code class="docutils literal notranslate"><span class="pre">ModelTrainer.get_all_models()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.models.ModelTrainer.get_model"><code class="docutils literal notranslate"><span class="pre">ModelTrainer.get_model()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.models.ModelTrainer.train_anfis"><code class="docutils literal notranslate"><span class="pre">ModelTrainer.train_anfis()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.models.ModelTrainer.train_random_forest"><code class="docutils literal notranslate"><span class="pre">ModelTrainer.train_random_forest()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.models.ModelTrainer.train_svm"><code class="docutils literal notranslate"><span class="pre">ModelTrainer.train_svm()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#src.evaluation.ModelEvaluator"><code class="docutils literal notranslate"><span class="pre">ModelEvaluator</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#src.evaluation.ModelEvaluator.compare_models"><code class="docutils literal notranslate"><span class="pre">ModelEvaluator.compare_models()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.evaluation.ModelEvaluator.evaluate_single_model"><code class="docutils literal notranslate"><span class="pre">ModelEvaluator.evaluate_single_model()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.evaluation.ModelEvaluator.plot_confusion_matrices"><code class="docutils literal notranslate"><span class="pre">ModelEvaluator.plot_confusion_matrices()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.evaluation.ModelEvaluator.plot_metrics_comparison"><code class="docutils literal notranslate"><span class="pre">ModelEvaluator.plot_metrics_comparison()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.evaluation.ModelEvaluator.plot_roc_curves"><code class="docutils literal notranslate"><span class="pre">ModelEvaluator.plot_roc_curves()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.evaluation.ModelEvaluator.statistical_significance_test"><code class="docutils literal notranslate"><span class="pre">ModelEvaluator.statistical_significance_test()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#src.explainability.SHAPExplainer"><code class="docutils literal notranslate"><span class="pre">SHAPExplainer</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#src.explainability.SHAPExplainer.calculate_shap_values"><code class="docutils literal notranslate"><span class="pre">SHAPExplainer.calculate_shap_values()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.explainability.SHAPExplainer.compare_models_importance"><code class="docutils literal notranslate"><span class="pre">SHAPExplainer.compare_models_importance()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.explainability.SHAPExplainer.create_explainer"><code class="docutils literal notranslate"><span class="pre">SHAPExplainer.create_explainer()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.explainability.SHAPExplainer.get_feature_importance_df"><code class="docutils literal notranslate"><span class="pre">SHAPExplainer.get_feature_importance_df()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.explainability.SHAPExplainer.plot_bar"><code class="docutils literal notranslate"><span class="pre">SHAPExplainer.plot_bar()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.explainability.SHAPExplainer.plot_dependence"><code class="docutils literal notranslate"><span class="pre">SHAPExplainer.plot_dependence()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.explainability.SHAPExplainer.plot_force"><code class="docutils literal notranslate"><span class="pre">SHAPExplainer.plot_force()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.explainability.SHAPExplainer.plot_summary"><code class="docutils literal notranslate"><span class="pre">SHAPExplainer.plot_summary()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.explainability.SHAPExplainer.plot_waterfall"><code class="docutils literal notranslate"><span class="pre">SHAPExplainer.plot_waterfall()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#src.anfis_network.ANFISNetwork"><code class="docutils literal notranslate"><span class="pre">ANFISNetwork</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#src.anfis_network.ANFISNetwork.forward"><code class="docutils literal notranslate"><span class="pre">ANFISNetwork.forward()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.anfis_network.ANFISNetwork.get_rules"><code class="docutils literal notranslate"><span class="pre">ANFISNetwork.get_rules()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#src.anfis_network.GaussianMF"><code class="docutils literal notranslate"><span class="pre">GaussianMF</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#src.anfis_network.GaussianMF.forward"><code class="docutils literal notranslate"><span class="pre">GaussianMF.forward()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#src.main_pipeline.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.main_pipeline.setup_directories"><code class="docutils literal notranslate"><span class="pre">setup_directories()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.credit_student_pipeline.ChillANFIS"><code class="docutils literal notranslate"><span class="pre">ChillANFIS</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#src.credit_student_pipeline.ChillANFIS.fit"><code class="docutils literal notranslate"><span class="pre">ChillANFIS.fit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.credit_student_pipeline.ChillANFIS.predict"><code class="docutils literal notranslate"><span class="pre">ChillANFIS.predict()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.credit_student_pipeline.ChillANFIS.predict_proba"><code class="docutils literal notranslate"><span class="pre">ChillANFIS.predict_proba()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.credit_student_pipeline.ChillANFIS.set_score_request"><code class="docutils literal notranslate"><span class="pre">ChillANFIS.set_score_request()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#src.credit_student_pipeline.clean_up_dataframe"><code class="docutils literal notranslate"><span class="pre">clean_up_dataframe()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.credit_student_pipeline.evaluate_model"><code class="docutils literal notranslate"><span class="pre">evaluate_model()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.credit_student_pipeline.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.credit_student_pipeline.prep_features"><code class="docutils literal notranslate"><span class="pre">prep_features()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.credit_student_pipeline.run_grid"><code class="docutils literal notranslate"><span class="pre">run_grid()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">mgl7760-projet-equipe3</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">API reference</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/api.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="api-reference">
+<h1>API reference<a class="headerlink" href="#api-reference" title="Link to this heading"></a></h1>
+<p>Generated from docstrings in the <code class="docutils literal notranslate"><span class="pre">src</span></code> package.</p>
+<section id="package">
+<h2>Package<a class="headerlink" href="#package" title="Link to this heading"></a></h2>
+<p>Credit Risk Prediction Pipeline with ANFIS
+A machine learning pipeline for predicting credit card default risk</p>
+<dl class="py class">
+<dt class="sig sig-object py">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">src.</span></span><span class="sig-name descname"><span class="pre">ANFISNetwork</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_rules</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/anfis_network.html#ANFISNetwork"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<dl class="simple">
+<dt>Takagi-Sugeno ANFIS Network</dt><dd><p>Optimized for 5 variables</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/anfis_network.html#ANFISNetwork.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Define the computation performed at every call.</p>
+<p>Should be overridden by all subclasses.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Although the recipe for forward pass needs to be defined within
+this function, one should call the <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code> instance afterwards
+instead of this since the former takes care of running the
+registered hooks while the latter silently ignores them.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">get_rules</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/anfis_network.html#ANFISNetwork.get_rules"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Extract readable rules from the network</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">src.</span></span><span class="sig-name descname"><span class="pre">DataPreprocessor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">random_seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">42</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/data_preprocessing.html#DataPreprocessor"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Handle all data preprocessing steps</p>
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">apply_smote</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_train</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/data_preprocessing.html#DataPreprocessor.apply_smote"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Apply SMOTE to balance training data</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">check_missing_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/data_preprocessing.html#DataPreprocessor.check_missing_values"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Check and report missing values</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">detect_outliers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">columns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/data_preprocessing.html#DataPreprocessor.detect_outliers"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Detect outliers using z-score method</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">encode_categorical</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">categorical_columns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/data_preprocessing.html#DataPreprocessor.encode_categorical"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>One-hot encode categorical variables</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">full_pipeline</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_col</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">apply_smote</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">winsorize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/data_preprocessing.html#DataPreprocessor.full_pipeline"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Execute full preprocessing pipeline</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">identify_column_types</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_col</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/data_preprocessing.html#DataPreprocessor.identify_column_types"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Identify categorical and numerical columns</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">load_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/data_preprocessing.html#DataPreprocessor.load_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Load dataset from file</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">normalize_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_test</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/data_preprocessing.html#DataPreprocessor.normalize_features"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Normalize numerical features using MinMaxScaler</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">remove_missing_critical</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">critical_columns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/data_preprocessing.html#DataPreprocessor.remove_missing_critical"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Remove rows with missing critical values</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">split_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_col</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/data_preprocessing.html#DataPreprocessor.split_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Split data into train and test sets with stratification</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">winsorize_outliers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">columns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limits</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(0.01,</span> <span class="pre">0.01)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/data_preprocessing.html#DataPreprocessor.winsorize_outliers"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Winsorize outliers in specified columns</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">src.</span></span><span class="sig-name descname"><span class="pre">FeatureSelector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">6</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">42</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/feature_selection.html#FeatureSelector"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Feature selection methods for reducing dimensionality</p>
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">correlation_analysis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/feature_selection.html#FeatureSelector.correlation_analysis"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Select features based on correlation with target</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">ensemble_selection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">methods</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/feature_selection.html#FeatureSelector.ensemble_selection"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Combine multiple feature selection methods and select features
+that appear most frequently</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">mutual_info_selection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/feature_selection.html#FeatureSelector.mutual_info_selection"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Select features using mutual information</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">rfe_selection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">estimator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/feature_selection.html#FeatureSelector.rfe_selection"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Recursive Feature Elimination</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/feature_selection.html#FeatureSelector.transform"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Transform dataset to include only selected features</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">univariate_selection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/feature_selection.html#FeatureSelector.univariate_selection"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Select features using univariate statistical tests (ANOVA F-value)</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">src.</span></span><span class="sig-name descname"><span class="pre">ModelEvaluator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'results'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/evaluation.html#ModelEvaluator"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Evaluate and compare model performance</p>
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">compare_models</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/evaluation.html#ModelEvaluator.compare_models"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Create comparison table of all evaluated models</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">evaluate_single_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_test</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_test</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/evaluation.html#ModelEvaluator.evaluate_single_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Evaluate a single model on test set</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">plot_confusion_matrices</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/evaluation.html#ModelEvaluator.plot_confusion_matrices"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Plot confusion matrices for all models</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">plot_metrics_comparison</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/evaluation.html#ModelEvaluator.plot_metrics_comparison"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Bar plot comparing key metrics across models</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">plot_roc_curves</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">models_dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_test</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_test</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/evaluation.html#ModelEvaluator.plot_roc_curves"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Plot ROC curves for all models</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">statistical_significance_test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cv_scores_dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'wilcoxon'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/evaluation.html#ModelEvaluator.statistical_significance_test"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Test statistical significance between model performances</p>
+<section id="parameters">
+<h3>Parameters:<a class="headerlink" href="#parameters" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>cv_scores_dict<span class="classifier">dict</span></dt><dd><p>Dictionary with model names as keys and arrays of CV scores as values</p>
+</dd>
+<dt>test<span class="classifier">str</span></dt><dd><p>‘wilcoxon’ for Wilcoxon signed-rank test or ‘ttest’ for paired t-test</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">src.</span></span><span class="sig-name descname"><span class="pre">ModelTrainer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">random_seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">42</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/models.html#ModelTrainer"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Train and optimize different models</p>
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">get_all_models</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/models.html#ModelTrainer.get_all_models"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Get all trained models</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">get_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/models.html#ModelTrainer.get_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Retrieve trained model</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">train_anfis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/models.html#ModelTrainer.train_anfis"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Train ANFIS model using PyTorch implementation</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">train_random_forest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cv</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">search_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'grid'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_iter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/models.html#ModelTrainer.train_random_forest"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Train and optimize Random Forest</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">train_svm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cv</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">search_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'randomized'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_iter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/models.html#ModelTrainer.train_svm"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Train and optimize SVM</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">src.</span></span><span class="sig-name descname"><span class="pre">SHAPExplainer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'plots'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/explainability.html#SHAPExplainer"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>SHAP analysis for model explainability</p>
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">calculate_shap_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_test</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/explainability.html#SHAPExplainer.calculate_shap_values"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Calculate SHAP values for test set</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">compare_models_importance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_names</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">top_n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">15</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/explainability.html#SHAPExplainer.compare_models_importance"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Compare feature importance across multiple models</p>
+<section id="id1">
+<h3>Parameters:<a class="headerlink" href="#id1" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>model_names<span class="classifier">list</span></dt><dd><p>List of model names to compare</p>
+</dd>
+<dt>top_n<span class="classifier">int</span></dt><dd><p>Number of top features to display</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">create_explainer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tree'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/explainability.html#SHAPExplainer.create_explainer"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Create SHAP explainer for a given model</p>
+<section id="id2">
+<h3>Parameters:<a class="headerlink" href="#id2" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>model<span class="classifier">trained model</span></dt><dd><p>The model to explain</p>
+</dd>
+<dt>X_train<span class="classifier">array-like</span></dt><dd><p>Training data for background samples</p>
+</dd>
+<dt>model_name<span class="classifier">str</span></dt><dd><p>Name of the model</p>
+</dd>
+<dt>model_type<span class="classifier">str</span></dt><dd><p>Type of explainer: ‘tree’, ‘kernel’, or ‘linear’</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">get_feature_importance_df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/explainability.html#SHAPExplainer.get_feature_importance_df"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Get feature importance as DataFrame</p>
+<section id="returns">
+<h3>Returns:<a class="headerlink" href="#returns" title="Link to this heading"></a></h3>
+<p>pd.DataFrame with features and their mean absolute SHAP values</p>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">plot_bar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_display</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/explainability.html#SHAPExplainer.plot_bar"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Create SHAP bar plot showing mean absolute feature importance</p>
+<section id="id3">
+<h3>Parameters:<a class="headerlink" href="#id3" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>model_name<span class="classifier">str</span></dt><dd><p>Name of the model</p>
+</dd>
+<dt>max_display<span class="classifier">int</span></dt><dd><p>Maximum number of features to display</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">plot_dependence</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interaction_feature</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/explainability.html#SHAPExplainer.plot_dependence"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Create SHAP dependence plot showing feature interactions</p>
+<section id="id4">
+<h3>Parameters:<a class="headerlink" href="#id4" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>model_name<span class="classifier">str</span></dt><dd><p>Name of the model</p>
+</dd>
+<dt>feature_name<span class="classifier">str</span></dt><dd><p>Main feature to plot</p>
+</dd>
+<dt>interaction_feature<span class="classifier">str or ‘auto’</span></dt><dd><p>Feature to color by (auto-detected if ‘auto’)</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">plot_force</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instance_idx</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/explainability.html#SHAPExplainer.plot_force"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Create SHAP force plot for individual prediction</p>
+<section id="id5">
+<h3>Parameters:<a class="headerlink" href="#id5" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>model_name<span class="classifier">str</span></dt><dd><p>Name of the model</p>
+</dd>
+<dt>instance_idx<span class="classifier">int</span></dt><dd><p>Index of the instance to explain</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">plot_summary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_display</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/explainability.html#SHAPExplainer.plot_summary"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Create SHAP summary plot showing global feature importance</p>
+<section id="id6">
+<h3>Parameters:<a class="headerlink" href="#id6" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>model_name<span class="classifier">str</span></dt><dd><p>Name of the model</p>
+</dd>
+<dt>max_display<span class="classifier">int</span></dt><dd><p>Maximum number of features to display</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">plot_waterfall</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instance_idx</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_display</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/explainability.html#SHAPExplainer.plot_waterfall"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Create SHAP waterfall plot for individual prediction</p>
+<section id="id7">
+<h3>Parameters:<a class="headerlink" href="#id7" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>model_name<span class="classifier">str</span></dt><dd><p>Name of the model</p>
+</dd>
+<dt>instance_idx<span class="classifier">int</span></dt><dd><p>Index of the instance to explain</p>
+</dd>
+<dt>max_display<span class="classifier">int</span></dt><dd><p>Maximum number of features to display</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-src.config">
+<span id="modules"></span><h2>Modules<a class="headerlink" href="#module-src.config" title="Link to this heading"></a></h2>
+<p>Configuration file for credit risk prediction pipeline</p>
+<p id="module-src.data_preprocessing">Data preprocessing pipeline for credit risk prediction</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.data_preprocessing.DataPreprocessor">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">src.data_preprocessing.</span></span><span class="sig-name descname"><span class="pre">DataPreprocessor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">random_seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">42</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/data_preprocessing.html#DataPreprocessor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.data_preprocessing.DataPreprocessor" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Handle all data preprocessing steps</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.data_preprocessing.DataPreprocessor.apply_smote">
+<span class="sig-name descname"><span class="pre">apply_smote</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_train</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/data_preprocessing.html#DataPreprocessor.apply_smote"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.data_preprocessing.DataPreprocessor.apply_smote" title="Link to this definition"></a></dt>
+<dd><p>Apply SMOTE to balance training data</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.data_preprocessing.DataPreprocessor.check_missing_values">
+<span class="sig-name descname"><span class="pre">check_missing_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/data_preprocessing.html#DataPreprocessor.check_missing_values"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.data_preprocessing.DataPreprocessor.check_missing_values" title="Link to this definition"></a></dt>
+<dd><p>Check and report missing values</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.data_preprocessing.DataPreprocessor.detect_outliers">
+<span class="sig-name descname"><span class="pre">detect_outliers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">columns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/data_preprocessing.html#DataPreprocessor.detect_outliers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.data_preprocessing.DataPreprocessor.detect_outliers" title="Link to this definition"></a></dt>
+<dd><p>Detect outliers using z-score method</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.data_preprocessing.DataPreprocessor.encode_categorical">
+<span class="sig-name descname"><span class="pre">encode_categorical</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">categorical_columns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/data_preprocessing.html#DataPreprocessor.encode_categorical"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.data_preprocessing.DataPreprocessor.encode_categorical" title="Link to this definition"></a></dt>
+<dd><p>One-hot encode categorical variables</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.data_preprocessing.DataPreprocessor.full_pipeline">
+<span class="sig-name descname"><span class="pre">full_pipeline</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_col</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">apply_smote</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">winsorize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/data_preprocessing.html#DataPreprocessor.full_pipeline"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.data_preprocessing.DataPreprocessor.full_pipeline" title="Link to this definition"></a></dt>
+<dd><p>Execute full preprocessing pipeline</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.data_preprocessing.DataPreprocessor.identify_column_types">
+<span class="sig-name descname"><span class="pre">identify_column_types</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_col</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/data_preprocessing.html#DataPreprocessor.identify_column_types"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.data_preprocessing.DataPreprocessor.identify_column_types" title="Link to this definition"></a></dt>
+<dd><p>Identify categorical and numerical columns</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.data_preprocessing.DataPreprocessor.load_data">
+<span class="sig-name descname"><span class="pre">load_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/data_preprocessing.html#DataPreprocessor.load_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.data_preprocessing.DataPreprocessor.load_data" title="Link to this definition"></a></dt>
+<dd><p>Load dataset from file</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.data_preprocessing.DataPreprocessor.normalize_features">
+<span class="sig-name descname"><span class="pre">normalize_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_test</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/data_preprocessing.html#DataPreprocessor.normalize_features"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.data_preprocessing.DataPreprocessor.normalize_features" title="Link to this definition"></a></dt>
+<dd><p>Normalize numerical features using MinMaxScaler</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.data_preprocessing.DataPreprocessor.remove_missing_critical">
+<span class="sig-name descname"><span class="pre">remove_missing_critical</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">critical_columns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/data_preprocessing.html#DataPreprocessor.remove_missing_critical"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.data_preprocessing.DataPreprocessor.remove_missing_critical" title="Link to this definition"></a></dt>
+<dd><p>Remove rows with missing critical values</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.data_preprocessing.DataPreprocessor.split_data">
+<span class="sig-name descname"><span class="pre">split_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_col</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/data_preprocessing.html#DataPreprocessor.split_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.data_preprocessing.DataPreprocessor.split_data" title="Link to this definition"></a></dt>
+<dd><p>Split data into train and test sets with stratification</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.data_preprocessing.DataPreprocessor.winsorize_outliers">
+<span class="sig-name descname"><span class="pre">winsorize_outliers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">columns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limits</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(0.01,</span> <span class="pre">0.01)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/data_preprocessing.html#DataPreprocessor.winsorize_outliers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.data_preprocessing.DataPreprocessor.winsorize_outliers" title="Link to this definition"></a></dt>
+<dd><p>Winsorize outliers in specified columns</p>
+</dd></dl>
+
+</dd></dl>
+
+<p id="module-src.feature_selection">Feature selection module for dimensionality reduction (especially for ANFIS)</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.feature_selection.FeatureSelector">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">src.feature_selection.</span></span><span class="sig-name descname"><span class="pre">FeatureSelector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">6</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">42</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/feature_selection.html#FeatureSelector"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.feature_selection.FeatureSelector" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Feature selection methods for reducing dimensionality</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.feature_selection.FeatureSelector.correlation_analysis">
+<span class="sig-name descname"><span class="pre">correlation_analysis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/feature_selection.html#FeatureSelector.correlation_analysis"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.feature_selection.FeatureSelector.correlation_analysis" title="Link to this definition"></a></dt>
+<dd><p>Select features based on correlation with target</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.feature_selection.FeatureSelector.ensemble_selection">
+<span class="sig-name descname"><span class="pre">ensemble_selection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">methods</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/feature_selection.html#FeatureSelector.ensemble_selection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.feature_selection.FeatureSelector.ensemble_selection" title="Link to this definition"></a></dt>
+<dd><p>Combine multiple feature selection methods and select features
+that appear most frequently</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.feature_selection.FeatureSelector.mutual_info_selection">
+<span class="sig-name descname"><span class="pre">mutual_info_selection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/feature_selection.html#FeatureSelector.mutual_info_selection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.feature_selection.FeatureSelector.mutual_info_selection" title="Link to this definition"></a></dt>
+<dd><p>Select features using mutual information</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.feature_selection.FeatureSelector.rfe_selection">
+<span class="sig-name descname"><span class="pre">rfe_selection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">estimator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/feature_selection.html#FeatureSelector.rfe_selection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.feature_selection.FeatureSelector.rfe_selection" title="Link to this definition"></a></dt>
+<dd><p>Recursive Feature Elimination</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.feature_selection.FeatureSelector.transform">
+<span class="sig-name descname"><span class="pre">transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/feature_selection.html#FeatureSelector.transform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.feature_selection.FeatureSelector.transform" title="Link to this definition"></a></dt>
+<dd><p>Transform dataset to include only selected features</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.feature_selection.FeatureSelector.univariate_selection">
+<span class="sig-name descname"><span class="pre">univariate_selection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/feature_selection.html#FeatureSelector.univariate_selection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.feature_selection.FeatureSelector.univariate_selection" title="Link to this definition"></a></dt>
+<dd><p>Select features using univariate statistical tests (ANOVA F-value)</p>
+</dd></dl>
+
+</dd></dl>
+
+<p id="module-src.models">Model definitions and training functions</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.models.ANFISClassifier">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">src.models.</span></span><span class="sig-name descname"><span class="pre">ANFISClassifier</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_rules</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_epochs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">learning_rate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.01</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">32</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/models.html#ANFISClassifier"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.models.ANFISClassifier" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseEstimator</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ClassifierMixin</span></code></p>
+<p>Scikit-learn compatible wrapper for PyTorch ANFIS Network</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.models.ANFISClassifier.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/models.html#ANFISClassifier.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.models.ANFISClassifier.fit" title="Link to this definition"></a></dt>
+<dd><p>Train the ANFIS model</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.models.ANFISClassifier.predict">
+<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/models.html#ANFISClassifier.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.models.ANFISClassifier.predict" title="Link to this definition"></a></dt>
+<dd><p>Predict class labels</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.models.ANFISClassifier.predict_proba">
+<span class="sig-name descname"><span class="pre">predict_proba</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/models.html#ANFISClassifier.predict_proba"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.models.ANFISClassifier.predict_proba" title="Link to this definition"></a></dt>
+<dd><p>Predict class probabilities</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.models.ANFISClassifier.set_score_request">
+<span class="sig-name descname"><span class="pre">set_score_request</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_weight</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'$UNCHANGED$'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#src.models.ANFISClassifier" title="src.models.ANFISClassifier"><span class="pre">ANFISClassifier</span></a></span></span><a class="headerlink" href="#src.models.ANFISClassifier.set_score_request" title="Link to this definition"></a></dt>
+<dd><p>Configure whether metadata should be requested to be passed to the <code class="docutils literal notranslate"><span class="pre">score</span></code> method.</p>
+<p>Note that this method is only relevant when this estimator is used as a
+sub-estimator within a <span class="xref std std-term">meta-estimator</span> and metadata routing is enabled
+with <code class="docutils literal notranslate"><span class="pre">enable_metadata_routing=True</span></code> (see <code class="xref py py-func docutils literal notranslate"><span class="pre">sklearn.set_config()</span></code>).
+Please check the <span class="xref std std-ref">User Guide</span> on how the routing
+mechanism works.</p>
+<p>The options for each parameter are:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">True</span></code>: metadata is requested, and passed to <code class="docutils literal notranslate"><span class="pre">score</span></code> if provided. The request is ignored if metadata is not provided.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">False</span></code>: metadata is not requested and the meta-estimator will not pass it to <code class="docutils literal notranslate"><span class="pre">score</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">None</span></code>: metadata is not requested, and the meta-estimator will raise an error if the user provides it.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">str</span></code>: metadata should be passed to the meta-estimator with this given alias instead of the original name.</p></li>
+</ul>
+<p>The default (<code class="docutils literal notranslate"><span class="pre">sklearn.utils.metadata_routing.UNCHANGED</span></code>) retains the
+existing request. This allows you to change the request for some
+parameters and not others.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version 1.3.</span></p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>sample_weight</strong> (<em>str</em><em>, </em><em>True</em><em>, </em><em>False</em><em>, or </em><em>None</em><em>,                     </em><em>default=sklearn.utils.metadata_routing.UNCHANGED</em>) – Metadata routing for <code class="docutils literal notranslate"><span class="pre">sample_weight</span></code> parameter in <code class="docutils literal notranslate"><span class="pre">score</span></code>.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>self</strong> – The updated object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>object</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.models.ModelTrainer">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">src.models.</span></span><span class="sig-name descname"><span class="pre">ModelTrainer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">random_seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">42</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/models.html#ModelTrainer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.models.ModelTrainer" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Train and optimize different models</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.models.ModelTrainer.get_all_models">
+<span class="sig-name descname"><span class="pre">get_all_models</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/models.html#ModelTrainer.get_all_models"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.models.ModelTrainer.get_all_models" title="Link to this definition"></a></dt>
+<dd><p>Get all trained models</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.models.ModelTrainer.get_model">
+<span class="sig-name descname"><span class="pre">get_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/models.html#ModelTrainer.get_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.models.ModelTrainer.get_model" title="Link to this definition"></a></dt>
+<dd><p>Retrieve trained model</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.models.ModelTrainer.train_anfis">
+<span class="sig-name descname"><span class="pre">train_anfis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/models.html#ModelTrainer.train_anfis"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.models.ModelTrainer.train_anfis" title="Link to this definition"></a></dt>
+<dd><p>Train ANFIS model using PyTorch implementation</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.models.ModelTrainer.train_random_forest">
+<span class="sig-name descname"><span class="pre">train_random_forest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cv</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">search_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'grid'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_iter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/models.html#ModelTrainer.train_random_forest"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.models.ModelTrainer.train_random_forest" title="Link to this definition"></a></dt>
+<dd><p>Train and optimize Random Forest</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.models.ModelTrainer.train_svm">
+<span class="sig-name descname"><span class="pre">train_svm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cv</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">search_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'randomized'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_iter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/models.html#ModelTrainer.train_svm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.models.ModelTrainer.train_svm" title="Link to this definition"></a></dt>
+<dd><p>Train and optimize SVM</p>
+</dd></dl>
+
+</dd></dl>
+
+<p id="module-src.evaluation">Model evaluation metrics and statistical significance testing</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.evaluation.ModelEvaluator">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">src.evaluation.</span></span><span class="sig-name descname"><span class="pre">ModelEvaluator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'results'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/evaluation.html#ModelEvaluator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.evaluation.ModelEvaluator" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Evaluate and compare model performance</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.evaluation.ModelEvaluator.compare_models">
+<span class="sig-name descname"><span class="pre">compare_models</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/evaluation.html#ModelEvaluator.compare_models"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.evaluation.ModelEvaluator.compare_models" title="Link to this definition"></a></dt>
+<dd><p>Create comparison table of all evaluated models</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.evaluation.ModelEvaluator.evaluate_single_model">
+<span class="sig-name descname"><span class="pre">evaluate_single_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_test</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_test</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/evaluation.html#ModelEvaluator.evaluate_single_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.evaluation.ModelEvaluator.evaluate_single_model" title="Link to this definition"></a></dt>
+<dd><p>Evaluate a single model on test set</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.evaluation.ModelEvaluator.plot_confusion_matrices">
+<span class="sig-name descname"><span class="pre">plot_confusion_matrices</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/evaluation.html#ModelEvaluator.plot_confusion_matrices"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.evaluation.ModelEvaluator.plot_confusion_matrices" title="Link to this definition"></a></dt>
+<dd><p>Plot confusion matrices for all models</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.evaluation.ModelEvaluator.plot_metrics_comparison">
+<span class="sig-name descname"><span class="pre">plot_metrics_comparison</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/evaluation.html#ModelEvaluator.plot_metrics_comparison"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.evaluation.ModelEvaluator.plot_metrics_comparison" title="Link to this definition"></a></dt>
+<dd><p>Bar plot comparing key metrics across models</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.evaluation.ModelEvaluator.plot_roc_curves">
+<span class="sig-name descname"><span class="pre">plot_roc_curves</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">models_dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_test</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_test</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/evaluation.html#ModelEvaluator.plot_roc_curves"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.evaluation.ModelEvaluator.plot_roc_curves" title="Link to this definition"></a></dt>
+<dd><p>Plot ROC curves for all models</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.evaluation.ModelEvaluator.statistical_significance_test">
+<span class="sig-name descname"><span class="pre">statistical_significance_test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cv_scores_dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'wilcoxon'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/evaluation.html#ModelEvaluator.statistical_significance_test"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.evaluation.ModelEvaluator.statistical_significance_test" title="Link to this definition"></a></dt>
+<dd><p>Test statistical significance between model performances</p>
+<section id="id8">
+<h3>Parameters:<a class="headerlink" href="#id8" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>cv_scores_dict<span class="classifier">dict</span></dt><dd><p>Dictionary with model names as keys and arrays of CV scores as values</p>
+</dd>
+<dt>test<span class="classifier">str</span></dt><dd><p>‘wilcoxon’ for Wilcoxon signed-rank test or ‘ttest’ for paired t-test</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+</dd></dl>
+
+<p id="module-src.explainability">SHAP-based explainability analysis for credit risk models</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.explainability.SHAPExplainer">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">src.explainability.</span></span><span class="sig-name descname"><span class="pre">SHAPExplainer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'plots'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/explainability.html#SHAPExplainer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.explainability.SHAPExplainer" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>SHAP analysis for model explainability</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.explainability.SHAPExplainer.calculate_shap_values">
+<span class="sig-name descname"><span class="pre">calculate_shap_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_test</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/explainability.html#SHAPExplainer.calculate_shap_values"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.explainability.SHAPExplainer.calculate_shap_values" title="Link to this definition"></a></dt>
+<dd><p>Calculate SHAP values for test set</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.explainability.SHAPExplainer.compare_models_importance">
+<span class="sig-name descname"><span class="pre">compare_models_importance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_names</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">top_n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">15</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/explainability.html#SHAPExplainer.compare_models_importance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.explainability.SHAPExplainer.compare_models_importance" title="Link to this definition"></a></dt>
+<dd><p>Compare feature importance across multiple models</p>
+<section id="id9">
+<h3>Parameters:<a class="headerlink" href="#id9" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>model_names<span class="classifier">list</span></dt><dd><p>List of model names to compare</p>
+</dd>
+<dt>top_n<span class="classifier">int</span></dt><dd><p>Number of top features to display</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.explainability.SHAPExplainer.create_explainer">
+<span class="sig-name descname"><span class="pre">create_explainer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tree'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/explainability.html#SHAPExplainer.create_explainer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.explainability.SHAPExplainer.create_explainer" title="Link to this definition"></a></dt>
+<dd><p>Create SHAP explainer for a given model</p>
+<section id="id10">
+<h3>Parameters:<a class="headerlink" href="#id10" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>model<span class="classifier">trained model</span></dt><dd><p>The model to explain</p>
+</dd>
+<dt>X_train<span class="classifier">array-like</span></dt><dd><p>Training data for background samples</p>
+</dd>
+<dt>model_name<span class="classifier">str</span></dt><dd><p>Name of the model</p>
+</dd>
+<dt>model_type<span class="classifier">str</span></dt><dd><p>Type of explainer: ‘tree’, ‘kernel’, or ‘linear’</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.explainability.SHAPExplainer.get_feature_importance_df">
+<span class="sig-name descname"><span class="pre">get_feature_importance_df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/explainability.html#SHAPExplainer.get_feature_importance_df"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.explainability.SHAPExplainer.get_feature_importance_df" title="Link to this definition"></a></dt>
+<dd><p>Get feature importance as DataFrame</p>
+<section id="id11">
+<h3>Returns:<a class="headerlink" href="#id11" title="Link to this heading"></a></h3>
+<p>pd.DataFrame with features and their mean absolute SHAP values</p>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.explainability.SHAPExplainer.plot_bar">
+<span class="sig-name descname"><span class="pre">plot_bar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_display</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/explainability.html#SHAPExplainer.plot_bar"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.explainability.SHAPExplainer.plot_bar" title="Link to this definition"></a></dt>
+<dd><p>Create SHAP bar plot showing mean absolute feature importance</p>
+<section id="id12">
+<h3>Parameters:<a class="headerlink" href="#id12" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>model_name<span class="classifier">str</span></dt><dd><p>Name of the model</p>
+</dd>
+<dt>max_display<span class="classifier">int</span></dt><dd><p>Maximum number of features to display</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.explainability.SHAPExplainer.plot_dependence">
+<span class="sig-name descname"><span class="pre">plot_dependence</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interaction_feature</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/explainability.html#SHAPExplainer.plot_dependence"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.explainability.SHAPExplainer.plot_dependence" title="Link to this definition"></a></dt>
+<dd><p>Create SHAP dependence plot showing feature interactions</p>
+<section id="id13">
+<h3>Parameters:<a class="headerlink" href="#id13" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>model_name<span class="classifier">str</span></dt><dd><p>Name of the model</p>
+</dd>
+<dt>feature_name<span class="classifier">str</span></dt><dd><p>Main feature to plot</p>
+</dd>
+<dt>interaction_feature<span class="classifier">str or ‘auto’</span></dt><dd><p>Feature to color by (auto-detected if ‘auto’)</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.explainability.SHAPExplainer.plot_force">
+<span class="sig-name descname"><span class="pre">plot_force</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instance_idx</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/explainability.html#SHAPExplainer.plot_force"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.explainability.SHAPExplainer.plot_force" title="Link to this definition"></a></dt>
+<dd><p>Create SHAP force plot for individual prediction</p>
+<section id="id14">
+<h3>Parameters:<a class="headerlink" href="#id14" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>model_name<span class="classifier">str</span></dt><dd><p>Name of the model</p>
+</dd>
+<dt>instance_idx<span class="classifier">int</span></dt><dd><p>Index of the instance to explain</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.explainability.SHAPExplainer.plot_summary">
+<span class="sig-name descname"><span class="pre">plot_summary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_display</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/explainability.html#SHAPExplainer.plot_summary"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.explainability.SHAPExplainer.plot_summary" title="Link to this definition"></a></dt>
+<dd><p>Create SHAP summary plot showing global feature importance</p>
+<section id="id15">
+<h3>Parameters:<a class="headerlink" href="#id15" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>model_name<span class="classifier">str</span></dt><dd><p>Name of the model</p>
+</dd>
+<dt>max_display<span class="classifier">int</span></dt><dd><p>Maximum number of features to display</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.explainability.SHAPExplainer.plot_waterfall">
+<span class="sig-name descname"><span class="pre">plot_waterfall</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instance_idx</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_display</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/explainability.html#SHAPExplainer.plot_waterfall"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.explainability.SHAPExplainer.plot_waterfall" title="Link to this definition"></a></dt>
+<dd><p>Create SHAP waterfall plot for individual prediction</p>
+<section id="id16">
+<h3>Parameters:<a class="headerlink" href="#id16" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>model_name<span class="classifier">str</span></dt><dd><p>Name of the model</p>
+</dd>
+<dt>instance_idx<span class="classifier">int</span></dt><dd><p>Index of the instance to explain</p>
+</dd>
+<dt>max_display<span class="classifier">int</span></dt><dd><p>Maximum number of features to display</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+</dd></dl>
+
+<p id="module-src.anfis_network">PyTorch implementation of ANFIS (Adaptive Neuro-Fuzzy Inference System)</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.anfis_network.ANFISNetwork">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">src.anfis_network.</span></span><span class="sig-name descname"><span class="pre">ANFISNetwork</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_rules</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/anfis_network.html#ANFISNetwork"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.anfis_network.ANFISNetwork" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<dl class="simple">
+<dt>Takagi-Sugeno ANFIS Network</dt><dd><p>Optimized for 5 variables</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.anfis_network.ANFISNetwork.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/anfis_network.html#ANFISNetwork.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.anfis_network.ANFISNetwork.forward" title="Link to this definition"></a></dt>
+<dd><p>Define the computation performed at every call.</p>
+<p>Should be overridden by all subclasses.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Although the recipe for forward pass needs to be defined within
+this function, one should call the <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code> instance afterwards
+instead of this since the former takes care of running the
+registered hooks while the latter silently ignores them.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.anfis_network.ANFISNetwork.get_rules">
+<span class="sig-name descname"><span class="pre">get_rules</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/anfis_network.html#ANFISNetwork.get_rules"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.anfis_network.ANFISNetwork.get_rules" title="Link to this definition"></a></dt>
+<dd><p>Extract readable rules from the network</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.anfis_network.GaussianMF">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">src.anfis_network.</span></span><span class="sig-name descname"><span class="pre">GaussianMF</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_membership_functions</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/anfis_network.html#GaussianMF"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.anfis_network.GaussianMF" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<p>Gaussian Membership Function Layer</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.anfis_network.GaussianMF.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/anfis_network.html#GaussianMF.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.anfis_network.GaussianMF.forward" title="Link to this definition"></a></dt>
+<dd><p>Define the computation performed at every call.</p>
+<p>Should be overridden by all subclasses.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Although the recipe for forward pass needs to be defined within
+this function, one should call the <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code> instance afterwards
+instead of this since the former takes care of running the
+registered hooks while the latter silently ignores them.</p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<p id="module-src.main_pipeline">Main pipeline orchestrating the complete credit risk prediction workflow</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="src.main_pipeline.main">
+<span class="sig-prename descclassname"><span class="pre">src.main_pipeline.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_column</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'default'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/main_pipeline.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main_pipeline.main" title="Link to this definition"></a></dt>
+<dd><p>Main pipeline execution</p>
+<section id="id17">
+<h3>Parameters:<a class="headerlink" href="#id17" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>data_path<span class="classifier">str</span></dt><dd><p>Path to the credit card dataset</p>
+</dd>
+<dt>target_column<span class="classifier">str</span></dt><dd><p>Name of the target column</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.main_pipeline.setup_directories">
+<span class="sig-prename descclassname"><span class="pre">src.main_pipeline.</span></span><span class="sig-name descname"><span class="pre">setup_directories</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/main_pipeline.html#setup_directories"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main_pipeline.setup_directories" title="Link to this definition"></a></dt>
+<dd><p>Create necessary output directories</p>
+</dd></dl>
+
+<p id="module-src.credit_student_pipeline">Quick-and-dirty student-style script for credit default prediction with
+RandomForest, SVM and a lightweight ANFIS-like classifier.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.credit_student_pipeline.ChillANFIS">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">src.credit_student_pipeline.</span></span><span class="sig-name descname"><span class="pre">ChillANFIS</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_rules</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">6</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fuzz_sigma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_iter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">400</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">42</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/credit_student_pipeline.html#ChillANFIS"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.credit_student_pipeline.ChillANFIS" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseEstimator</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ClassifierMixin</span></code></p>
+<p>Loosely inspired ANFIS classifier using Gaussian rules + logistic head.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.credit_student_pipeline.ChillANFIS.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/credit_student_pipeline.html#ChillANFIS.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.credit_student_pipeline.ChillANFIS.fit" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.credit_student_pipeline.ChillANFIS.predict">
+<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/credit_student_pipeline.html#ChillANFIS.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.credit_student_pipeline.ChillANFIS.predict" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.credit_student_pipeline.ChillANFIS.predict_proba">
+<span class="sig-name descname"><span class="pre">predict_proba</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/credit_student_pipeline.html#ChillANFIS.predict_proba"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.credit_student_pipeline.ChillANFIS.predict_proba" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.credit_student_pipeline.ChillANFIS.set_score_request">
+<span class="sig-name descname"><span class="pre">set_score_request</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_weight</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'$UNCHANGED$'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#src.credit_student_pipeline.ChillANFIS" title="src.credit_student_pipeline.ChillANFIS"><span class="pre">ChillANFIS</span></a></span></span><a class="headerlink" href="#src.credit_student_pipeline.ChillANFIS.set_score_request" title="Link to this definition"></a></dt>
+<dd><p>Configure whether metadata should be requested to be passed to the <code class="docutils literal notranslate"><span class="pre">score</span></code> method.</p>
+<p>Note that this method is only relevant when this estimator is used as a
+sub-estimator within a <span class="xref std std-term">meta-estimator</span> and metadata routing is enabled
+with <code class="docutils literal notranslate"><span class="pre">enable_metadata_routing=True</span></code> (see <code class="xref py py-func docutils literal notranslate"><span class="pre">sklearn.set_config()</span></code>).
+Please check the <span class="xref std std-ref">User Guide</span> on how the routing
+mechanism works.</p>
+<p>The options for each parameter are:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">True</span></code>: metadata is requested, and passed to <code class="docutils literal notranslate"><span class="pre">score</span></code> if provided. The request is ignored if metadata is not provided.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">False</span></code>: metadata is not requested and the meta-estimator will not pass it to <code class="docutils literal notranslate"><span class="pre">score</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">None</span></code>: metadata is not requested, and the meta-estimator will raise an error if the user provides it.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">str</span></code>: metadata should be passed to the meta-estimator with this given alias instead of the original name.</p></li>
+</ul>
+<p>The default (<code class="docutils literal notranslate"><span class="pre">sklearn.utils.metadata_routing.UNCHANGED</span></code>) retains the
+existing request. This allows you to change the request for some
+parameters and not others.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version 1.3.</span></p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>sample_weight</strong> (<em>str</em><em>, </em><em>True</em><em>, </em><em>False</em><em>, or </em><em>None</em><em>,                     </em><em>default=sklearn.utils.metadata_routing.UNCHANGED</em>) – Metadata routing for <code class="docutils literal notranslate"><span class="pre">sample_weight</span></code> parameter in <code class="docutils literal notranslate"><span class="pre">score</span></code>.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>self</strong> – The updated object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>object</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.credit_student_pipeline.clean_up_dataframe">
+<span class="sig-prename descclassname"><span class="pre">src.credit_student_pipeline.</span></span><span class="sig-name descname"><span class="pre">clean_up_dataframe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">raw_df</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/credit_student_pipeline.html#clean_up_dataframe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.credit_student_pipeline.clean_up_dataframe" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.credit_student_pipeline.evaluate_model">
+<span class="sig-prename descclassname"><span class="pre">src.credit_student_pipeline.</span></span><span class="sig-name descname"><span class="pre">evaluate_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fitted_model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_test</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_test</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/credit_student_pipeline.html#evaluate_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.credit_student_pipeline.evaluate_model" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.credit_student_pipeline.main">
+<span class="sig-prename descclassname"><span class="pre">src.credit_student_pipeline.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/credit_student_pipeline.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.credit_student_pipeline.main" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.credit_student_pipeline.prep_features">
+<span class="sig-prename descclassname"><span class="pre">src.credit_student_pipeline.</span></span><span class="sig-name descname"><span class="pre">prep_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df_clean</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_col</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/credit_student_pipeline.html#prep_features"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.credit_student_pipeline.prep_features" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.credit_student_pipeline.run_grid">
+<span class="sig-prename descclassname"><span class="pre">src.credit_student_pipeline.</span></span><span class="sig-name descname"><span class="pre">run_grid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_fit</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_fit</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/credit_student_pipeline.html#run_grid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.credit_student_pipeline.run_grid" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="mgl7760-projet-equipe3 documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Master&#39;s Project.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
