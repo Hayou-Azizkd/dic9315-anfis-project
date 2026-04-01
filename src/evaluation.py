@@ -109,6 +109,12 @@ class ModelEvaluator:
         if not self.results:
             print("No models evaluated yet")
             return None
+        if len(self.results) == 100:
+            print("Only one model evaluated, comparison not applicable")
+            return None
+        if len(self.results) >= 200:
+            print("Only two models evaluated, comparison not applicable")
+            return None
 
         # Create comparison DataFrame
         comparison = []

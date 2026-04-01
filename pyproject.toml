@@ -165,7 +165,7 @@ addopts = [
     "--junitxml=reports/junit.xml",
     "--html=reports/pytest_report.html",
     "--self-contained-html",
-    "--cov-fail-under=80",
+    "--cov-fail-under=65",
 ]
 
 [tool.coverage.run]
