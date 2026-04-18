@@ -1,0 +1,334 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>src.feature_selection &mdash; mgl7760-projet-equipe3 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            mgl7760-projet-equipe3
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">API reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">mgl7760-projet-equipe3</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+          <li class="breadcrumb-item"><a href="../src.html">src</a></li>
+      <li class="breadcrumb-item active">src.feature_selection</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for src.feature_selection</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Feature selection module for dimensionality reduction (especially for ANFIS)</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.ensemble</span><span class="w"> </span><span class="kn">import</span> <span class="n">RandomForestClassifier</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.feature_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">RFE</span><span class="p">,</span> <span class="n">SelectKBest</span><span class="p">,</span> <span class="n">f_classif</span><span class="p">,</span> <span class="n">mutual_info_classif</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">config</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="FeatureSelector">
+<a class="viewcode-back" href="../../api.html#src.FeatureSelector">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">FeatureSelector</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Feature selection methods for reducing dimensionality&quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">n_features</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">N_FEATURES_ANFIS</span><span class="p">,</span> <span class="n">random_seed</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">RANDOM_SEED</span>
+    <span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_features</span> <span class="o">=</span> <span class="n">n_features</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">random_seed</span> <span class="o">=</span> <span class="n">random_seed</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">selected_features</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scores</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="FeatureSelector.correlation_analysis">
+<a class="viewcode-back" href="../../api.html#src.FeatureSelector.correlation_analysis">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">correlation_analysis</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">0.1</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Select features based on correlation with target&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+            <span class="n">X</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+        <span class="c1"># Calculate correlation with target</span>
+        <span class="n">correlations</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">X</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+            <span class="n">corr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">corrcoef</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">col</span><span class="p">],</span> <span class="n">y</span><span class="p">)[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+            <span class="n">correlations</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">corr</span><span class="p">)</span>
+
+        <span class="c1"># Sort by correlation</span>
+        <span class="n">sorted_features</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">correlations</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="c1"># Select top n features</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">selected_features</span> <span class="o">=</span> <span class="p">[</span><span class="n">f</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">sorted_features</span><span class="p">[:</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_features</span><span class="p">]]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scores</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">sorted_features</span><span class="p">)</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+            <span class="s2">&quot;Correlation-based selection: </span><span class="si">%s</span><span class="s2"> features selected&quot;</span><span class="p">,</span>
+            <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">selected_features</span><span class="p">),</span>
+        <span class="p">)</span>
+        <span class="k">for</span> <span class="n">feat</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">selected_features</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;  </span><span class="si">%s</span><span class="s2">: </span><span class="si">%.4f</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">feat</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scores</span><span class="p">[</span><span class="n">feat</span><span class="p">])</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">selected_features</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scores</span></div>
+
+
+<div class="viewcode-block" id="FeatureSelector.rfe_selection">
+<a class="viewcode-back" href="../../api.html#src.FeatureSelector.rfe_selection">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">rfe_selection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">estimator</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Recursive Feature Elimination&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">estimator</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">estimator</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span>
+                <span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">random_seed</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span>
+            <span class="p">)</span>
+
+        <span class="n">rfe</span> <span class="o">=</span> <span class="n">RFE</span><span class="p">(</span><span class="n">estimator</span><span class="o">=</span><span class="n">estimator</span><span class="p">,</span> <span class="n">n_features_to_select</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_features</span><span class="p">)</span>
+        <span class="n">rfe</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+        <span class="c1"># Get feature names</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+            <span class="n">feature_names</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">feature_names</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;feature_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">selected_features</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">feature_names</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">selected</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">rfe</span><span class="o">.</span><span class="n">support_</span><span class="p">)</span> <span class="k">if</span> <span class="n">selected</span>
+        <span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scores</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">feature_names</span><span class="p">,</span> <span class="n">rfe</span><span class="o">.</span><span class="n">ranking_</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;RFE selection: </span><span class="si">%s</span><span class="s2"> features selected&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">selected_features</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">feat</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">selected_features</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;  </span><span class="si">%s</span><span class="s2"> (rank: </span><span class="si">%s</span><span class="s2">)&quot;</span><span class="p">,</span> <span class="n">feat</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scores</span><span class="p">[</span><span class="n">feat</span><span class="p">])</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">selected_features</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scores</span></div>
+
+
+<div class="viewcode-block" id="FeatureSelector.mutual_info_selection">
+<a class="viewcode-back" href="../../api.html#src.FeatureSelector.mutual_info_selection">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">mutual_info_selection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Select features using mutual information&quot;&quot;&quot;</span>
+        <span class="c1"># Calculate mutual information</span>
+        <span class="n">mi_scores</span> <span class="o">=</span> <span class="n">mutual_info_classif</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">random_seed</span><span class="p">)</span>
+
+        <span class="c1"># Get feature names</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+            <span class="n">feature_names</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">feature_names</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;feature_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span>
+
+        <span class="c1"># Create feature-score pairs and sort</span>
+        <span class="n">feature_mi</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">feature_names</span><span class="p">,</span> <span class="n">mi_scores</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+        <span class="n">feature_mi</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="c1"># Select top n features</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">selected_features</span> <span class="o">=</span> <span class="p">[</span><span class="n">f</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">feature_mi</span><span class="p">[:</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_features</span><span class="p">]]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scores</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">feature_mi</span><span class="p">)</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+            <span class="s2">&quot;Mutual Information selection: </span><span class="si">%s</span><span class="s2"> features selected&quot;</span><span class="p">,</span>
+            <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">selected_features</span><span class="p">),</span>
+        <span class="p">)</span>
+        <span class="k">for</span> <span class="n">feat</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">selected_features</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;  </span><span class="si">%s</span><span class="s2">: </span><span class="si">%.4f</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">feat</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scores</span><span class="p">[</span><span class="n">feat</span><span class="p">])</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">selected_features</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scores</span></div>
+
+
+<div class="viewcode-block" id="FeatureSelector.univariate_selection">
+<a class="viewcode-back" href="../../api.html#src.FeatureSelector.univariate_selection">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">univariate_selection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Select features using univariate statistical tests (ANOVA F-value)&quot;&quot;&quot;</span>
+        <span class="n">selector</span> <span class="o">=</span> <span class="n">SelectKBest</span><span class="p">(</span><span class="n">score_func</span><span class="o">=</span><span class="n">f_classif</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_features</span><span class="p">)</span>
+        <span class="n">selector</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+        <span class="c1"># Get feature names</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+            <span class="n">feature_names</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">feature_names</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;feature_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">selected_features</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">feature_names</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">selected</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">selector</span><span class="o">.</span><span class="n">get_support</span><span class="p">())</span>
+            <span class="k">if</span> <span class="n">selected</span>
+        <span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scores</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">feature_names</span><span class="p">,</span> <span class="n">selector</span><span class="o">.</span><span class="n">scores_</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+            <span class="s2">&quot;Univariate (ANOVA) selection: </span><span class="si">%s</span><span class="s2"> features selected&quot;</span><span class="p">,</span>
+            <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">selected_features</span><span class="p">),</span>
+        <span class="p">)</span>
+        <span class="k">for</span> <span class="n">feat</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">selected_features</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;  </span><span class="si">%s</span><span class="s2">: </span><span class="si">%.4f</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">feat</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scores</span><span class="p">[</span><span class="n">feat</span><span class="p">])</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">selected_features</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scores</span></div>
+
+
+<div class="viewcode-block" id="FeatureSelector.ensemble_selection">
+<a class="viewcode-back" href="../../api.html#src.FeatureSelector.ensemble_selection">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">ensemble_selection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Combine multiple feature selection methods and select features</span>
+<span class="sd">        that appear most frequently</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">methods</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">methods</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;rfe&quot;</span><span class="p">,</span> <span class="s2">&quot;mutual_info&quot;</span><span class="p">,</span> <span class="s2">&quot;correlation&quot;</span><span class="p">]</span>
+        <span class="n">all_selected</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">method</span> <span class="ow">in</span> <span class="n">methods</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;rfe&quot;</span><span class="p">:</span>
+                <span class="n">features</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rfe_selection</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;mutual_info&quot;</span><span class="p">:</span>
+                <span class="n">features</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mutual_info_selection</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;correlation&quot;</span><span class="p">:</span>
+                <span class="n">features</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">correlation_analysis</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;univariate&quot;</span><span class="p">:</span>
+                <span class="n">features</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">univariate_selection</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Unknown feature selection method: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">method</span><span class="p">)</span>
+                <span class="k">continue</span>
+
+            <span class="n">all_selected</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">features</span><span class="p">)</span>
+
+        <span class="c1"># Count frequency of each feature</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">Counter</span>
+
+        <span class="n">feature_counts</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">all_selected</span><span class="p">)</span>
+
+        <span class="c1"># Select top n features by frequency</span>
+        <span class="n">most_common</span> <span class="o">=</span> <span class="n">feature_counts</span><span class="o">.</span><span class="n">most_common</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_features</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">selected_features</span> <span class="o">=</span> <span class="p">[</span><span class="n">f</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">most_common</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scores</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">feature_counts</span><span class="p">)</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+            <span class="s2">&quot;Ensemble selection (methods=</span><span class="si">%s</span><span class="s2">): </span><span class="si">%s</span><span class="s2"> features selected&quot;</span><span class="p">,</span>
+            <span class="n">methods</span><span class="p">,</span>
+            <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">selected_features</span><span class="p">),</span>
+        <span class="p">)</span>
+        <span class="k">for</span> <span class="n">feat</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">selected_features</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                <span class="s2">&quot;  </span><span class="si">%s</span><span class="s2">: appeared in </span><span class="si">%s</span><span class="s2">/</span><span class="si">%s</span><span class="s2"> methods&quot;</span><span class="p">,</span> <span class="n">feat</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scores</span><span class="p">[</span><span class="n">feat</span><span class="p">],</span> <span class="nb">len</span><span class="p">(</span><span class="n">methods</span><span class="p">)</span>
+            <span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">selected_features</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scores</span></div>
+
+
+<div class="viewcode-block" id="FeatureSelector.transform">
+<a class="viewcode-back" href="../../api.html#src.FeatureSelector.transform">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Transform dataset to include only selected features&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">selected_features</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;No features selected. Run a selection method first.&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">X</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">selected_features</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># Assume feature names are in order</span>
+            <span class="n">feature_indices</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">f</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span> <span class="k">if</span> <span class="n">f</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">selected_features</span>
+            <span class="p">]</span>
+            <span class="k">return</span> <span class="n">X</span><span class="p">[:,</span> <span class="n">feature_indices</span><span class="p">]</span></div>
+</div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="c1"># Example usage</span>
+    <span class="k">pass</span>
+
+    <span class="c1"># preprocessor = DataPreprocessor()</span>
+    <span class="c1"># X_train, X_test, y_train, y_test, features = preprocessor.full_pipeline(</span>
+    <span class="c1">#     &#39;data/credit_data.csv&#39;,</span>
+    <span class="c1">#     &#39;default&#39;</span>
+    <span class="c1"># )</span>
+
+    <span class="c1"># selector = FeatureSelector(n_features=10)</span>
+    <span class="c1"># selected_features, scores = selector.ensemble_selection(X_train, y_train)</span>
+    <span class="c1"># X_train_selected = selector.transform(X_train)</span>
+    <span class="c1"># X_test_selected = selector.transform(X_test)</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Master&#39;s Project.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

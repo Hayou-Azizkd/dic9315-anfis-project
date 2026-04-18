@@ -1,0 +1,371 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>src.main_pipeline &mdash; mgl7760-projet-equipe3 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            mgl7760-projet-equipe3
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">API reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">mgl7760-projet-equipe3</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+          <li class="breadcrumb-item"><a href="../src.html">src</a></li>
+      <li class="breadcrumb-item active">src.main_pipeline</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for src.main_pipeline</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Main pipeline orchestrating the complete credit risk prediction workflow</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">cross_val_score</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">config</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.data_preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">DataPreprocessor</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.evaluation</span><span class="w"> </span><span class="kn">import</span> <span class="n">ModelEvaluator</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.feature_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">FeatureSelector</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">ModelTrainer</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="setup_directories">
+<a class="viewcode-back" href="../../api.html#src.main_pipeline.setup_directories">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">setup_directories</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create necessary output directories&quot;&quot;&quot;</span>
+    <span class="n">Path</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">OUTPUT_DIR</span><span class="p">)</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">Path</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">MODELS_DIR</span><span class="p">)</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">Path</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">PLOTS_DIR</span><span class="p">)</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">Path</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">REPORTS_DIR</span><span class="p">)</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Output directories created&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="main">
+<a class="viewcode-back" href="../../api.html#src.main_pipeline.main">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">data_path</span><span class="p">,</span> <span class="n">target_column</span><span class="o">=</span><span class="s2">&quot;default&quot;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Main pipeline execution</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">    -----------</span>
+<span class="sd">    data_path : str</span>
+<span class="sd">        Path to the credit card dataset</span>
+<span class="sd">    target_column : str</span>
+<span class="sd">        Name of the target column</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">80</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot; CREDIT RISK PREDICTION PIPELINE - ANFIS vs BASELINES&quot;</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">80</span><span class="p">)</span>
+
+    <span class="c1"># Setup</span>
+    <span class="n">setup_directories</span><span class="p">()</span>
+
+    <span class="c1"># ========================================================================</span>
+    <span class="c1"># STEP 1: DATA PREPROCESSING</span>
+    <span class="c1"># ========================================================================</span>
+    <span class="n">preprocessor</span> <span class="o">=</span> <span class="n">DataPreprocessor</span><span class="p">(</span><span class="n">random_seed</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">RANDOM_SEED</span><span class="p">)</span>
+
+    <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="n">feature_names</span> <span class="o">=</span> <span class="n">preprocessor</span><span class="o">.</span><span class="n">full_pipeline</span><span class="p">(</span>
+        <span class="n">filepath</span><span class="o">=</span><span class="n">data_path</span><span class="p">,</span>
+        <span class="n">target_col</span><span class="o">=</span><span class="n">target_column</span><span class="p">,</span>
+        <span class="n">apply_smote</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">USE_SMOTE</span><span class="p">,</span>
+        <span class="n">winsorize</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">USE_WINSORIZATION</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Final training set shape: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">X_train</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Final test set shape: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">X_test</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+    <span class="c1"># ========================================================================</span>
+    <span class="c1"># STEP 2: FEATURE SELECTION (for ANFIS)</span>
+    <span class="c1"># ========================================================================</span>
+    <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">USE_FEATURE_SELECTION</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">80</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;FEATURE SELECTION FOR ANFIS&quot;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">80</span><span class="p">)</span>
+
+        <span class="n">selector</span> <span class="o">=</span> <span class="n">FeatureSelector</span><span class="p">(</span>
+            <span class="n">n_features</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">N_FEATURES_ANFIS</span><span class="p">,</span> <span class="n">random_seed</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">RANDOM_SEED</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Use ensemble method for robust selection</span>
+        <span class="n">selected_features</span><span class="p">,</span> <span class="n">feature_scores</span> <span class="o">=</span> <span class="n">selector</span><span class="o">.</span><span class="n">ensemble_selection</span><span class="p">(</span>
+            <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;rfe&quot;</span><span class="p">,</span> <span class="s2">&quot;mutual_info&quot;</span><span class="p">,</span> <span class="s2">&quot;correlation&quot;</span><span class="p">]</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Transform data for ANFIS</span>
+        <span class="n">X_train_anfis</span> <span class="o">=</span> <span class="n">selector</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+        <span class="n">X_test_anfis</span> <span class="o">=</span> <span class="n">selector</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Reduced feature set for ANFIS: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">X_train_anfis</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">X_train_anfis</span> <span class="o">=</span> <span class="n">X_train</span>
+        <span class="n">X_test_anfis</span> <span class="o">=</span> <span class="n">X_test</span>
+
+    <span class="c1"># ========================================================================</span>
+    <span class="c1"># STEP 3: MODEL TRAINING &amp; OPTIMIZATION</span>
+    <span class="c1"># ========================================================================</span>
+    <span class="n">trainer</span> <span class="o">=</span> <span class="n">ModelTrainer</span><span class="p">(</span><span class="n">random_seed</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">RANDOM_SEED</span><span class="p">)</span>
+
+    <span class="c1"># Random Forest</span>
+    <span class="n">rf_model</span><span class="p">,</span> <span class="n">rf_params</span> <span class="o">=</span> <span class="n">trainer</span><span class="o">.</span><span class="n">train_random_forest</span><span class="p">(</span>
+        <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">CV_FOLDS</span><span class="p">,</span> <span class="n">search_type</span><span class="o">=</span><span class="s2">&quot;randomized&quot;</span><span class="p">,</span> <span class="n">n_iter</span><span class="o">=</span><span class="mi">20</span>
+    <span class="p">)</span>
+
+    <span class="c1"># SVM</span>
+    <span class="n">svm_model</span><span class="p">,</span> <span class="n">svm_params</span> <span class="o">=</span> <span class="n">trainer</span><span class="o">.</span><span class="n">train_svm</span><span class="p">(</span>
+        <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">CV_FOLDS</span><span class="p">,</span> <span class="n">search_type</span><span class="o">=</span><span class="s2">&quot;randomized&quot;</span><span class="p">,</span> <span class="n">n_iter</span><span class="o">=</span><span class="mi">20</span>
+    <span class="p">)</span>
+
+    <span class="c1"># ANFIS (on reduced feature set)</span>
+    <span class="n">anfis_model</span><span class="p">,</span> <span class="n">anfis_params</span> <span class="o">=</span> <span class="n">trainer</span><span class="o">.</span><span class="n">train_anfis</span><span class="p">(</span>
+        <span class="n">X_train_anfis</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">n_features</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">N_FEATURES_ANFIS</span>
+    <span class="p">)</span>
+
+    <span class="c1"># ========================================================================</span>
+    <span class="c1"># STEP 4: CROSS-VALIDATION FOR STATISTICAL TESTING</span>
+    <span class="c1"># ========================================================================</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">80</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;CROSS-VALIDATION FOR STATISTICAL SIGNIFICANCE&quot;</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">80</span><span class="p">)</span>
+
+    <span class="n">cv_scores</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="c1"># Random Forest CV</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Random Forest cross-validation...&quot;</span><span class="p">)</span>
+    <span class="n">cv_scores</span><span class="p">[</span><span class="s2">&quot;Random Forest&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span>
+        <span class="n">rf_model</span><span class="p">,</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">CV_FOLDS_FINAL</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;f1&quot;</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span>
+    <span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;RF CV F1 scores: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">cv_scores</span><span class="p">[</span><span class="s2">&quot;Random Forest&quot;</span><span class="p">])</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+        <span class="s2">&quot;RF CV Mean: </span><span class="si">%.4f</span><span class="s2"> (+/- </span><span class="si">%.4f</span><span class="s2">)&quot;</span><span class="p">,</span>
+        <span class="n">cv_scores</span><span class="p">[</span><span class="s2">&quot;Random Forest&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span>
+        <span class="n">cv_scores</span><span class="p">[</span><span class="s2">&quot;Random Forest&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">(),</span>
+    <span class="p">)</span>
+
+    <span class="c1"># SVM CV</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;SVM cross-validation...&quot;</span><span class="p">)</span>
+    <span class="n">cv_scores</span><span class="p">[</span><span class="s2">&quot;SVM&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span>
+        <span class="n">svm_model</span><span class="p">,</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">CV_FOLDS_FINAL</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;f1&quot;</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span>
+    <span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;SVM CV F1 scores: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">cv_scores</span><span class="p">[</span><span class="s2">&quot;SVM&quot;</span><span class="p">])</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+        <span class="s2">&quot;SVM CV Mean: </span><span class="si">%.4f</span><span class="s2"> (+/- </span><span class="si">%.4f</span><span class="s2">)&quot;</span><span class="p">,</span>
+        <span class="n">cv_scores</span><span class="p">[</span><span class="s2">&quot;SVM&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span>
+        <span class="n">cv_scores</span><span class="p">[</span><span class="s2">&quot;SVM&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">(),</span>
+    <span class="p">)</span>
+
+    <span class="c1"># ANFIS CV (placeholder - would need actual implementation)</span>
+    <span class="k">if</span> <span class="n">anfis_model</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;ANFIS cross-validation...&quot;</span><span class="p">)</span>
+        <span class="c1"># cv_scores[&#39;ANFIS&#39;] = cross_val_score(anfis_model, X_train_anfis, y_train, ...)</span>
+        <span class="c1"># For now, create dummy scores as placeholder</span>
+        <span class="n">cv_scores</span><span class="p">[</span><span class="s2">&quot;ANFIS&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">CV_FOLDS_FINAL</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+            <span class="s2">&quot;ANFIS CV using placeholder scores — requires actual ANFIS implementation&quot;</span>
+        <span class="p">)</span>
+
+    <span class="c1"># ========================================================================</span>
+    <span class="c1"># STEP 5: FINAL EVALUATION ON TEST SET</span>
+    <span class="c1"># ========================================================================</span>
+    <span class="n">evaluator</span> <span class="o">=</span> <span class="n">ModelEvaluator</span><span class="p">(</span><span class="n">output_dir</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">OUTPUT_DIR</span><span class="p">)</span>
+
+    <span class="c1"># Evaluate Random Forest</span>
+    <span class="n">evaluator</span><span class="o">.</span><span class="n">evaluate_single_model</span><span class="p">(</span><span class="n">rf_model</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="s2">&quot;Random Forest&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Evaluate SVM</span>
+    <span class="n">evaluator</span><span class="o">.</span><span class="n">evaluate_single_model</span><span class="p">(</span><span class="n">svm_model</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="s2">&quot;SVM&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Evaluate ANFIS (if implemented)</span>
+    <span class="k">if</span> <span class="n">anfis_model</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">evaluator</span><span class="o">.</span><span class="n">evaluate_single_model</span><span class="p">(</span><span class="n">anfis_model</span><span class="p">,</span> <span class="n">X_test_anfis</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="s2">&quot;ANFIS&quot;</span><span class="p">)</span>
+
+    <span class="c1"># ========================================================================</span>
+    <span class="c1"># STEP 6: COMPARISON &amp; VISUALIZATION</span>
+    <span class="c1"># ========================================================================</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">80</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;GENERATING COMPARISON REPORTS&quot;</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">80</span><span class="p">)</span>
+
+    <span class="c1"># Compare models</span>
+    <span class="n">comparison_df</span> <span class="o">=</span> <span class="n">evaluator</span><span class="o">.</span><span class="n">compare_models</span><span class="p">()</span>
+
+    <span class="c1"># Plot confusion matrices</span>
+    <span class="n">evaluator</span><span class="o">.</span><span class="n">plot_confusion_matrices</span><span class="p">()</span>
+
+    <span class="c1"># Plot ROC curves</span>
+    <span class="n">models_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Random Forest&quot;</span><span class="p">:</span> <span class="n">rf_model</span><span class="p">,</span> <span class="s2">&quot;SVM&quot;</span><span class="p">:</span> <span class="n">svm_model</span><span class="p">}</span>
+    <span class="k">if</span> <span class="n">anfis_model</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">models_dict</span><span class="p">[</span><span class="s2">&quot;ANFIS&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">anfis_model</span>
+
+    <span class="n">evaluator</span><span class="o">.</span><span class="n">plot_roc_curves</span><span class="p">(</span><span class="n">models_dict</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+
+    <span class="c1"># Plot metrics comparison</span>
+    <span class="n">evaluator</span><span class="o">.</span><span class="n">plot_metrics_comparison</span><span class="p">()</span>
+
+    <span class="c1"># Statistical significance testing</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">cv_scores</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">significance_df</span> <span class="o">=</span> <span class="n">evaluator</span><span class="o">.</span><span class="n">statistical_significance_test</span><span class="p">(</span>
+            <span class="n">cv_scores</span><span class="p">,</span> <span class="n">test</span><span class="o">=</span><span class="s2">&quot;wilcoxon&quot;</span>
+        <span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+            <span class="s2">&quot;Statistical significance (Wilcoxon):</span><span class="se">\n</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">significance_df</span><span class="o">.</span><span class="n">to_string</span><span class="p">()</span>
+        <span class="p">)</span>
+
+    <span class="c1"># ========================================================================</span>
+    <span class="c1"># STEP 7: INTERPRETABILITY ANALYSIS (for ANFIS)</span>
+    <span class="c1"># ========================================================================</span>
+    <span class="k">if</span> <span class="n">anfis_model</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">80</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;ANFIS INTERPRETABILITY ANALYSIS&quot;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">80</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Extracting fuzzy rules from ANFIS model...&quot;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+            <span class="s2">&quot;(This would show the generated rules and their business logic coherence)&quot;</span>
+        <span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+            <span class="s2">&quot;Example rule format: IF Payment_History is &#39;Late&#39; AND Credit_Limit is &#39;Low&#39; THEN Risk is &#39;High&#39;&quot;</span>
+        <span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Note: Requires actual ANFIS implementation to extract rules&quot;</span><span class="p">)</span>
+
+    <span class="c1"># ========================================================================</span>
+    <span class="c1"># FINAL SUMMARY</span>
+    <span class="c1"># ========================================================================</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">80</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;PIPELINE COMPLETED SUCCESSFULLY&quot;</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">80</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;All results saved to: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">OUTPUT_DIR</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+        <span class="s2">&quot;Generated files: model_comparison.csv, statistical_significance.csv, &quot;</span>
+        <span class="s2">&quot;confusion_matrices.png, roc_curves.png, metrics_comparison.png&quot;</span>
+    <span class="p">)</span>
+
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s2">&quot;models&quot;</span><span class="p">:</span> <span class="n">models_dict</span><span class="p">,</span>
+        <span class="s2">&quot;evaluator&quot;</span><span class="p">:</span> <span class="n">evaluator</span><span class="p">,</span>
+        <span class="s2">&quot;comparison&quot;</span><span class="p">:</span> <span class="n">comparison_df</span><span class="p">,</span>
+        <span class="s2">&quot;cv_scores&quot;</span><span class="p">:</span> <span class="n">cv_scores</span><span class="p">,</span>
+    <span class="p">}</span></div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="c1"># Example usage - update with your actual data path</span>
+    <span class="c1"># Assuming the dataset is named &#39;default_credit_card_clients.csv&#39;</span>
+
+    <span class="c1"># Check if data file is provided</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">data_file</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># Default path (update this to your actual file)</span>
+        <span class="n">data_file</span> <span class="o">=</span> <span class="s2">&quot;data/default_credit_card_clients.csv&quot;</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;No data file specified. Using default: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">data_file</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Usage: python main_pipeline.py &lt;path_to_data_file&gt;&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Check if file exists</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">Path</span><span class="p">(</span><span class="n">data_file</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Data file not found: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">data_file</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+            <span class="s2">&quot;Please download the &#39;Default of Credit Card Clients&#39; dataset from: &quot;</span>
+            <span class="s2">&quot;https://archive.ics.uci.edu/ml/datasets/default+of+credit+card+clients&quot;</span>
+        <span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="c1"># Run pipeline</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="n">main</span><span class="p">(</span>
+        <span class="n">data_path</span><span class="o">=</span><span class="n">data_file</span><span class="p">,</span>
+        <span class="n">target_column</span><span class="o">=</span><span class="s2">&quot;default payment next month&quot;</span><span class="p">,</span>  <span class="c1"># Adjust based on your dataset</span>
+    <span class="p">)</span>
+
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Pipeline execution complete!&quot;</span><span class="p">)</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Master&#39;s Project.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
